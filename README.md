@@ -1,86 +1,19 @@
-# Programación de Gráficos en Java — Versión 0.0.1
+# Separando la responsabilidad del dibujo (versión 0.0.2)
 
-Repositorio correspondiente **únicamente** a la versión **0.0.1** del proyecto **Programación de Gráficos en Java**.
-
-Esta versión contiene la base inicial del proyecto: una ventana gráfica sencilla creada con **AWT**, lista para usarse como punto de partida en las siguientes versiones.
-
----
-
-## Alcance de esta versión
-
-La versión **0.0.1** incluye:
-
-- Creación de la carpeta de trabajo del proyecto.
-- Creación del archivo principal `Ventana.java`.
-- Implementación de una ventana básica con AWT.
-- Configuración del tamaño inicial de la ventana.
-- Ejecución de la aplicación desde consola.
-- Manejo correcto del cierre de la ventana.
-- Preparación del método `paint()` para futuras operaciones de dibujo.
+## Compilar y ejecutar
+Desde la carpeta de trabajo:
+- Compilar: `javac Ventana.java Dibujo.java`
+- Ejecutar: `java Ventana`
 
 ---
+En esta versión se separa la lógica de dibujo de la ventana principal para mejorar la organización del proyecto y dejar una estructura más limpia para futuras ampliaciones gráficas.
 
-## Requisitos
+## ¿Qué se actualiza?
+- Se crea la clase `Dibujo.java` como componente independiente para concentrar la responsabilidad del área gráfica.
+- Se elimina la lógica de dibujo directa de `Ventana.java`, dejando esta clase enfocada en la creación y configuración de la ventana principal.
+- Se integra un objeto `Dibujo` dentro de `Ventana.java` y se agrega al centro de la interfaz mediante `BorderLayout`.
 
-- JDK instalado.
-- Editor o IDE, por ejemplo **Visual Studio Code**.
-- Consola o terminal.
-
----
-
-## Estructura del proyecto
-
-```text
-GraficaciónAnimación/
-└── Ventana.java
-```
-
----
-
-## Archivos incluidos
-
-| Archivo | Descripción |
-|---|---|
-| `Ventana.java` | Archivo principal de la aplicación gráfica. |
-
----
-
-## Compilar
-
-Desde la carpeta del proyecto:
-
-```bash
-javac Ventana.java
-```
-
----
-
-## Ejecutar
-
-Después de compilar:
-
-```bash
-java Ventana
-```
-
----
-
-## Resultado esperado
-
-Al ejecutar el programa se muestra una ventana básica titulada **Dibujo**.
-
-La ventana puede cerrarse correctamente desde el botón de cierre del sistema operativo.
-
----
-
-## Versión
-
-```text
-0.0.1
-```
-
----
-
-## Propósito del commit
-
-Este commit establece la base mínima del proyecto gráfico en Java para continuar con el desarrollo de las siguientes versiones.
+## Mejoras logradas
+- **Separación de responsabilidades**: la ventana principal y el dibujo quedan organizados en clases distintas.
+- **Código más mantenible**: la estructura facilita modificar el dibujo sin alterar la configuración general de la ventana.
+- **Base gráfica más clara**: el proyecto queda preparado para incorporar nuevas funciones de dibujo en versiones posteriores.
