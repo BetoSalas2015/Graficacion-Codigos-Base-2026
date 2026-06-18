@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Vector;
+import java.util.*;
+import java.io.*;
 
 public class Ventana extends JFrame {
     private final int HEIGHT = 400;
@@ -10,8 +11,9 @@ public class Ventana extends JFrame {
     private JPanel panelDatos, panelPunto1;
     private JLabel lblPunto1;
     private JTextField txtPunto1x, txtPunto1y;
-    private JButton btnGraficar, btnAgregar;
+    private JButton btnGraficar, btnAgregar, btnCargar;
     private Vector<Point> vectorPuntos;
+    private BufferedReader entrada;
 
     public Ventana() {
         super("Gráficos en Java");
@@ -29,23 +31,25 @@ public class Ventana extends JFrame {
         txtPunto1x = new JTextField("0");
         txtPunto1y = new JTextField("0");
 
-        btnGraficar = new JButton("¡Graficar!");
-        btnAgregar = new JButton("Agregar Punto");
+        //btnGraficar = new JButton("¡Graficar!");
+        //btnAgregar = new JButton("Agregar Punto");
+        btnCargar = new JButton("Cargar puntos");
 
         panelPunto1.add(txtPunto1x); panelPunto1.add(txtPunto1y);
 
         panelDatos.add(lblPunto1);
         panelDatos.add(panelPunto1);
-        panelDatos.add(btnAgregar);
+        //panelDatos.add(btnAgregar);
 
         setLayout(new BorderLayout());
-        add(panelDatos, "North");
+        //add(panelDatos, "North");
         add(dibujo, "Center");
-        add(btnGraficar, "South");
+        add(btnCargar, "South");
 
         // Gestión de Eventos
-        btnGraficar.addActionListener(new BotonGrafica());
-        btnAgregar.addActionListener(new BotonAgregar());
+        //btnGraficar.addActionListener(new BotonGrafica());
+        //btnAgregar.addActionListener(new BotonAgregar());
+        btnCargar.addActionListener(new BotonCargar());
 
         setSize(WIDTH, HEIGHT);
         setVisible(true);
@@ -70,6 +74,33 @@ public class Ventana extends JFrame {
            vectorPuntos.add(new Point(Integer.parseInt(txtPunto1x.getText()), 
                                       Integer.parseInt(txtPunto1y.getText())));
         }
+    }
+
+    private class BotonCargar implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String c, cad1, cad2;
+            StringTokenizer token;
+
+            vectorPuntos = new Vector<Point>();
+            try {
+                entrada = new BufferedReader(new FileReader("coordenadas.txt"));
+                while ((c = entrada.readLine()) != null) {
+                    token = new StringTokenizer(c, ",");
+                    cad1 = token.nextToken();
+                    cad2 = token.nextToken();
+
+                    vectorPuntos.add(new Point(Integer.parseInt(cad1), 
+                                               Integer.parseInt(cad2)));
+                }
+                entrada.close();
+                dibujo.asignaPuntos(vectorPuntos);
+                dibujo.repaint();
+            } catch (IOException ex) {
+                System.out.println("El Archivo no se pudo abrir.");
+            }
+        }
+        
     }
 
 
