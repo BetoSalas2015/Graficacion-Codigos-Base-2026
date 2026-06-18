@@ -1,4 +1,4 @@
-# Separando la responsabilidad del dibujo (versión 0.0.2)
+# Creando la interfaz de Usuario (versión 0.0.3)
 
 ## Compilar y ejecutar
 Desde la carpeta de trabajo:
@@ -6,14 +6,14 @@ Desde la carpeta de trabajo:
 - Ejecutar: `java Ventana`
 
 ---
-En esta versión se separa la lógica de dibujo de la ventana principal para mejorar la organización del proyecto y dejar una estructura más limpia para futuras ampliaciones gráficas.
+En esta versión se incorpora una interfaz de usuario básica para capturar coordenadas y graficar una línea desde la ventana principal.
 
 ## ¿Qué se actualiza?
-- Se crea la clase `Dibujo.java` como componente independiente para concentrar la responsabilidad del área gráfica.
-- Se elimina la lógica de dibujo directa de `Ventana.java`, dejando esta clase enfocada en la creación y configuración de la ventana principal.
-- Se integra un objeto `Dibujo` dentro de `Ventana.java` y se agrega al centro de la interfaz mediante `BorderLayout`.
+- Se agregan componentes Swing para capturar los puntos de inicio y fin mediante `JPanel`, `JLabel`, `JTextField` y `JButton`.
+- Se organiza la interfaz con `BorderLayout` y `GridLayout`, separando el panel de datos, el área de dibujo y el botón de acción.
+- Se implementa el manejo del evento del botón `¡Graficar!` para enviar las coordenadas capturadas al componente `Dibujo`.
+- Se añade el método `asignaPuntos()` en `Dibujo.java` para recibir y almacenar las coordenadas que serán graficadas.
 
 ## Mejoras logradas
-- **Separación de responsabilidades**: la ventana principal y el dibujo quedan organizados en clases distintas.
-- **Código más mantenible**: la estructura facilita modificar el dibujo sin alterar la configuración general de la ventana.
-- **Base gráfica más clara**: el proyecto queda preparado para incorporar nuevas funciones de dibujo en versiones posteriores.
+- **Interacción con el usuario**: la aplicación permite capturar coordenadas desde la interfaz gráfica.
+- **Flujo de datos más claro**: `Ventana.java` captura la entrada del usuario y `Dibujo.java` conserva la responsabilidad del trazo.
