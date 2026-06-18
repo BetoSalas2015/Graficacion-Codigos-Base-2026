@@ -1,19 +1,18 @@
-# Trabajando con Puntos (versión 0.0.4)
+# Graficando múltiples Puntos (versión 0.0.5)
 
-## Compilar y ejecutar
-Desde la carpeta de trabajo:
-- Compilar: `javac Ventana.java Dibujo.java Punto.java`
-- Ejecutar: `java Ventana`
+## Compilar y ejecutar  
+Desde la carpeta de trabajo:  
+- Compilar: `javac Ventana.java`  
+- Ejecutar: `java Ventana`  
 
----
-En esta versión se reemplaza el manejo de coordenadas independientes por objetos `Punto` para mejorar la organización de los datos gráficos.
+---  
+En esta versión se evoluciona la aplicación para dejar de graficar solo una línea entre dos puntos y pasar a **capturar y dibujar múltiples puntos** como una figura compuesta por segmentos consecutivos.
 
 ## ¿Qué se actualiza?
-- Se agrega la clase `Punto.java` para encapsular las coordenadas `x` e `y` en un objeto dedicado.
-- Se modifica `Dibujo.java` para recibir objetos `Punto` en lugar de valores enteros independientes.
-- Se actualiza `Ventana.java` para construir los puntos desde los valores capturados en la interfaz antes de enviarlos al componente de dibujo.
-- Se incorpora una validación en `Dibujo.java` para evitar intentos de dibujo cuando todavía no existen puntos asignados.
+- Se **simplifica la interfaz** para capturar un solo punto `(x, y)` y se incorpora un nuevo botón **“Agregar Punto”** para construir incrementalmente la lista de puntos a graficar.
+- En `Ventana.java` se crea y administra un `Vector<Punto>` (por ejemplo `vectorPuntos`) que almacena todos los puntos capturados; el botón **Agregar** inserta nuevos elementos en el vector y el botón **Graficar** envía el vector al componente de dibujo.
+- En `Dibujo.java` se reemplaza la lógica de dos puntos por una colección: `asignaPuntos(...)` ahora recibe un `Vector<Punto>` y `paintComponent(...)` recorre el vector para **dibujar segmentos entre puntos consecutivos** y **cerrar la figura** uniendo el último punto con el primero (con validación para evitar errores cuando aún no hay suficientes puntos).
 
 ## Mejoras logradas
-- **Modelo de datos más limpio**: las coordenadas quedan agrupadas en una clase dedicada y reutilizable.
-- **Código más mantenible**: el paso de información entre la interfaz y el componente gráfico es más claro y expresivo.
+- **Modelo de datos escalable**: se pasa de coordenadas sueltas a una estructura dinámica (`Vector`) que permite graficar cualquier cantidad de puntos sin rediseñar el flujo.
+- **Dibujo más robusto y controlado**: se agregan validaciones (nulos y tamaño mínimo) para evitar excepciones al repintar y se estandariza el renderizado como una secuencia de segmentos con cierre de figura.

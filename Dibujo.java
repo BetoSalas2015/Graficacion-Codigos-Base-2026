@@ -1,24 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Vector;
 
 public class Dibujo extends JPanel {
-    Punto punto1, punto2;
+    private Vector<Punto> vectorPuntos;
     
     public Dibujo() {
 
     }
 
-    public void asignaPuntos(Punto punto1, Punto punto2) {
-        this.punto1 = punto1;
-        this.punto2 = punto2;
+    public void asignaPuntos(Vector<Punto> vector) {
+        this.vectorPuntos = vector;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (punto1 != null && punto2 != null) {
-            g.drawLine(punto1.getX(), punto1.getY(), punto2.getX(), punto2.getY());
+        int i;
+        if (vectorPuntos != null && vectorPuntos.size() > 2) {
+            for (i = 0; i < vectorPuntos.size() - 1; i++) {
+                g.drawLine(vectorPuntos.get(i).getX(), vectorPuntos.get(i).getY(), 
+                            vectorPuntos.get(i + 1).getX(), vectorPuntos.get(i + 1).getY());
+            }
+            g.drawLine(vectorPuntos.get(i).getX(), vectorPuntos.get(i).getY(), 
+                            vectorPuntos.get(0).getX(), vectorPuntos.get(0).getY());
         }
 
     }
