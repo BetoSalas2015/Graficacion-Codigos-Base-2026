@@ -1,19 +1,19 @@
-# Creando la interfaz de Usuario (versión 0.0.3)
+# Trabajando con Puntos (versión 0.0.4)
 
 ## Compilar y ejecutar
 Desde la carpeta de trabajo:
-- Compilar: `javac Ventana.java Dibujo.java`
+- Compilar: `javac Ventana.java Dibujo.java Punto.java`
 - Ejecutar: `java Ventana`
 
 ---
-En esta versión se incorpora una interfaz de usuario básica para capturar coordenadas y graficar una línea desde la ventana principal.
+En esta versión se reemplaza el manejo de coordenadas independientes por objetos `Punto` para mejorar la organización de los datos gráficos.
 
 ## ¿Qué se actualiza?
-- Se agregan componentes Swing para capturar los puntos de inicio y fin mediante `JPanel`, `JLabel`, `JTextField` y `JButton`.
-- Se organiza la interfaz con `BorderLayout` y `GridLayout`, separando el panel de datos, el área de dibujo y el botón de acción.
-- Se implementa el manejo del evento del botón `¡Graficar!` para enviar las coordenadas capturadas al componente `Dibujo`.
-- Se añade el método `asignaPuntos()` en `Dibujo.java` para recibir y almacenar las coordenadas que serán graficadas.
+- Se agrega la clase `Punto.java` para encapsular las coordenadas `x` e `y` en un objeto dedicado.
+- Se modifica `Dibujo.java` para recibir objetos `Punto` en lugar de valores enteros independientes.
+- Se actualiza `Ventana.java` para construir los puntos desde los valores capturados en la interfaz antes de enviarlos al componente de dibujo.
+- Se incorpora una validación en `Dibujo.java` para evitar intentos de dibujo cuando todavía no existen puntos asignados.
 
 ## Mejoras logradas
-- **Interacción con el usuario**: la aplicación permite capturar coordenadas desde la interfaz gráfica.
-- **Flujo de datos más claro**: `Ventana.java` captura la entrada del usuario y `Dibujo.java` conserva la responsabilidad del trazo.
+- **Modelo de datos más limpio**: las coordenadas quedan agrupadas en una clase dedicada y reutilizable.
+- **Código más mantenible**: el paso de información entre la interfaz y el componente gráfico es más claro y expresivo.
