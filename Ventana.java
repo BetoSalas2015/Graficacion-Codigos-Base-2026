@@ -11,7 +11,7 @@ public class Ventana extends JFrame {
     private JLabel lblPunto1;
     private JTextField txtPunto1x, txtPunto1y;
     private JButton btnGraficar, btnAgregar;
-    private Vector<Punto> vectorPuntos;
+    private Vector<Point> vectorPuntos;
 
     public Ventana() {
         super("Gráficos en Java");
@@ -67,7 +67,7 @@ public class Ventana extends JFrame {
     
         @Override
         public void actionPerformed(ActionEvent e) {
-           vectorPuntos.add(new Punto(Integer.parseInt(txtPunto1x.getText()), 
+           vectorPuntos.add(new Point(Integer.parseInt(txtPunto1x.getText()), 
                                       Integer.parseInt(txtPunto1y.getText())));
         }
     }
