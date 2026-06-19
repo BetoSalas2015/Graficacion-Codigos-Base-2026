@@ -14,6 +14,9 @@ public class Ventana extends JFrame {
     private JButton btnGraficar, btnAgregar, btnCargar;
     private Vector<Point> vectorPuntos;
     private BufferedReader entrada;
+    private JMenuBar menuBar;
+    private JMenu mnuArchivo;
+    private JMenuItem itemCargar, itemSalir;
 
     public Ventana() {
         super("Gráficos en Java");
@@ -44,12 +47,15 @@ public class Ventana extends JFrame {
         setLayout(new BorderLayout());
         //add(panelDatos, "North");
         add(dibujo, "Center");
-        add(btnCargar, "South");
+
+        // Barra de Menus 
+        crearMenu();
 
         // Gestión de Eventos
         //btnGraficar.addActionListener(new BotonGrafica());
         //btnAgregar.addActionListener(new BotonAgregar());
-        btnCargar.addActionListener(new BotonCargar());
+        itemCargar.addActionListener(new BotonCargar());
+        itemSalir.addActionListener(new MenuSalir());
 
         setSize(WIDTH, HEIGHT);
         setVisible(true);
@@ -57,6 +63,7 @@ public class Ventana extends JFrame {
 
     }
 
+    // Clases para la gestión de eventos
     private class BotonGrafica implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -101,6 +108,36 @@ public class Ventana extends JFrame {
             }
         }
         
+    }
+
+    private class MenuSalir implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+        
+    }
+
+    // Métodos Generales
+    private void crearMenu() {
+        // Barra de Menus 
+        menuBar = new JMenuBar();
+        mnuArchivo = new JMenu("Archivo"); 
+        itemCargar = new JMenuItem("Cargar Puntos");
+        itemSalir = new JMenuItem("Salir");
+
+        // Construir el menú "Archivo"
+        mnuArchivo.add(itemCargar);
+        mnuArchivo.addSeparator(); // El separador queda mejor entre ambos items
+        mnuArchivo.add(itemSalir);
+
+        // Agregar el menú "Archivo" a la barra de menús
+        menuBar.add(mnuArchivo);
+
+        // 4. Asignar la barra de menús completada a la ventana (JFrame)
+        setJMenuBar(menuBar);
+
+        setJMenuBar(menuBar);
     }
 
 

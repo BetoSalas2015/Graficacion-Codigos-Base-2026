@@ -1,18 +1,18 @@
-# Archivos (versión 0.0.7)
+# Menús en Swing (versión 0.0.8)
 
-## Compilar y ejecutar  
-Desde la carpeta de trabajo:  
-- Compilar: `javac Ventana.java`  
-- Ejecutar: `java Ventana`  
+## Compilar y ejecutar
+Desde la carpeta de trabajo:
+- Compilar: `javac Ventana.java Dibujo.java`
+- Ejecutar: `java Ventana`
 
----  
-En esta versión se incorpora la carga de puntos desde un archivo de texto, permitiendo graficar coordenadas externas sin capturarlas manualmente desde la interfaz.
+---
+En esta versión se integra una **barra de menús con Swing** y se migra la acción de carga de puntos desde un botón a una opción del menú para mejorar la organización de la interfaz.
 
 ## ¿Qué se actualiza?
-- En `Ventana.java` se incorporan las clases de `java.io` y `java.util` para leer archivos de texto y procesar cada línea como un par de coordenadas.
-- Se agrega el botón `btnCargar`, encargado de ejecutar la carga de puntos desde el archivo `coordenadas.txt`, reemplazando temporalmente el flujo manual de captura con `btnAgregar`.
-- Se crea la clase interna `BotonCargar`, que utiliza `BufferedReader`, `FileReader` y `StringTokenizer` para leer cada línea del archivo, separar los valores `x` e `y`, convertirlos a enteros, almacenarlos como objetos `Point` en `vectorPuntos` y actualizar el dibujo.
+- Se añade la construcción de la barra de menús con **`JMenuBar`**, **`JMenu`** y **`JMenuItem`** en `Ventana`, incluyendo el menú **Archivo** y sus opciones.
+- Se conecta la gestión de eventos de menú mediante `ActionListener`, reutilizando la lógica existente de **carga desde archivo** para la opción *Archivo → Cargar puntos*.
+- Se implementa la opción *Archivo → Salir* para terminar la aplicación de forma explícita mediante `System.exit(0)`.
 
 ## Mejoras logradas
-- **Carga de datos más eficiente**: los puntos pueden definirse previamente en un archivo de texto, evitando la captura manual repetitiva desde la interfaz.
-- **Flujo de dibujo más automatizado**: la aplicación reconstruye el vector de puntos, asigna los datos al componente `Dibujo` y repinta la figura en una sola acción, manteniendo el código más organizado y fácil de extender.
+- **Interfaz más limpia y consistente**: el flujo de “Cargar puntos” se mueve a la barra de menús, reduciendo controles redundantes y alineando la UI con patrones típicos de aplicaciones de escritorio.
+- **Mejor reutilización de código**: la lógica ya implementada para cargar coordenadas se reaprovecha desde el menú sin duplicar comportamiento, facilitando mantenimiento y extensiones futuras.
