@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.util.*;
 import java.io.*;
 
@@ -15,8 +17,8 @@ public class Ventana extends JFrame {
     private Vector<Point> vectorPuntos;
     private BufferedReader entrada;
     private JMenuBar menuBar;
-    private JMenu mnuArchivo;
-    private JMenuItem itemCargar, itemSalir;
+    private JMenu mnuArchivo, mnuGraficar;
+    private JMenuItem itemCargar, itemSalir, itemAgregarPunto;
 
     public Ventana() {
         super("Gráficos en Java");
@@ -56,6 +58,7 @@ public class Ventana extends JFrame {
         //btnAgregar.addActionListener(new BotonAgregar());
         itemCargar.addActionListener(new BotonCargar());
         itemSalir.addActionListener(new MenuSalir());
+        itemAgregarPunto.addActionListener(new BotonAgregar());
 
         setSize(WIDTH, HEIGHT);
         setVisible(true);
@@ -75,12 +78,16 @@ public class Ventana extends JFrame {
     }
 
     private class BotonAgregar implements ActionListener {
-    
         @Override
         public void actionPerformed(ActionEvent e) {
-           vectorPuntos.add(new Point(Integer.parseInt(txtPunto1x.getText()), 
-                                      Integer.parseInt(txtPunto1y.getText())));
+            DialogoCoordenada dlgCoordenada = new DialogoCoordenada(Ventana.this);
+            if (dlgCoordenada.isOk()) {
+                Point p = dlgCoordenada.getResultado();
+                vectorPuntos.add(p);
+                dibujo.repaint();
+            }
         }
+        
     }
 
     private class BotonCargar implements ActionListener{
@@ -89,9 +96,19 @@ public class Ventana extends JFrame {
             String c, cad1, cad2;
             StringTokenizer token;
 
+            File carpetaActual = new File(System.getProperty("user.dir"));
+
+            JFileChooser chooser = new JFileChooser(carpetaActual);
+            FileNameExtensionFilter filtroTxt = new FileNameExtensionFilter("Archivos de texto (.txt)", "txt");
+            chooser.setFileFilter(filtroTxt);
+            int r = chooser.showOpenDialog(Ventana.this);
+            if (r != JFileChooser.APPROVE_OPTION) {
+                return;     // El usuario canceló
+            }
+            File archivo = chooser.getSelectedFile();
             vectorPuntos = new Vector<Point>();
             try {
-                entrada = new BufferedReader(new FileReader("coordenadas.txt"));
+                entrada = new BufferedReader(new FileReader(archivo));
                 while ((c = entrada.readLine()) != null) {
                     token = new StringTokenizer(c, ",");
                     cad1 = token.nextToken();
@@ -104,7 +121,9 @@ public class Ventana extends JFrame {
                 dibujo.asignaPuntos(vectorPuntos);
                 dibujo.repaint();
             } catch (IOException ex) {
-                System.out.println("El Archivo no se pudo abrir.");
+                JOptionPane.showMessageDialog(Ventana.this, ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex ) {
+                JOptionPane.showMessageDialog(Ventana.this, "El archivo no contiene numeros","Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         
@@ -123,16 +142,22 @@ public class Ventana extends JFrame {
         // Barra de Menus 
         menuBar = new JMenuBar();
         mnuArchivo = new JMenu("Archivo"); 
-        itemCargar = new JMenuItem("Cargar Puntos");
+        mnuGraficar = new JMenu("Graficar");
+        itemCargar = new JMenuItem("Cargar Puntos...");
         itemSalir = new JMenuItem("Salir");
+        itemAgregarPunto = new JMenuItem("Agregar Punto...");
 
         // Construir el menú "Archivo"
         mnuArchivo.add(itemCargar);
         mnuArchivo.addSeparator(); // El separador queda mejor entre ambos items
         mnuArchivo.add(itemSalir);
 
-        // Agregar el menú "Archivo" a la barra de menús
+        // Construir el menu "Graficar"
+        mnuGraficar.add(itemAgregarPunto);
+
+        // Agregar los JMenu a la barra de menús
         menuBar.add(mnuArchivo);
+        menuBar.add(mnuGraficar);
 
         // 4. Asignar la barra de menús completada a la ventana (JFrame)
         setJMenuBar(menuBar);
