@@ -49,14 +49,15 @@ public class Dibujo extends JPanel {
         // Graficamos nuestros puntos
         g2d.setColor(new Color(0x11, 0x2E, 0x81));
         g2d.setStroke(new BasicStroke(2.5f));
-        int i;
+        int lado = 3;
         if (vectorPuntos != null && vectorPuntos.size() > 2) {
-            for (i = 0; i < vectorPuntos.size() - 1; i++) {
-                g2d.draw(new Line2D.Float(vectorPuntos.get(i), vectorPuntos.get(i + 1)));
+            for (Point point : vectorPuntos) {
+                float x = (float) point.getX() / 2;
+                float y = (float) point.getY() / 2;
+                g2d.fill(new Rectangle2D.Float(x, -y, lado, lado));
             }
-            g2d.draw(new Line2D.Float(vectorPuntos.get(i), vectorPuntos.get(0)));
-
         }
 
     }
+    
 }

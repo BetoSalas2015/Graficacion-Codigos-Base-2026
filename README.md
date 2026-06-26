@@ -1,4 +1,4 @@
-# Diálogos y diálogos personalizados (versión 0.0.9)
+# Graficación de puntos con Java2D (versión 0.0.10)
 
 ## Compilar y ejecutar
 Desde la carpeta de trabajo:
@@ -6,13 +6,13 @@ Desde la carpeta de trabajo:
 - Ejecutar: `java Ventana`
 
 ---
-En esta versión se incorpora la interacción con el usuario mediante diálogos Swing, eliminando dependencias de entrada hardcodeada y habilitando captura/selección de datos desde la interfaz.
+En esta versión se actualiza el proceso de graficación para dibujar puntos individuales sobre el plano coordenado usando Java2D y corrigiendo la orientación del eje Y propia de la pantalla.
 
 ## ¿Qué se actualiza?
-- Se agrega soporte de diálogos estándar con `JOptionPane` para reportar errores y eventos al usuario (por ejemplo, al fallar la carga de archivo).
-- Se mejora la carga de puntos desde archivo incorporando `JFileChooser` como selector de archivos, con filtro por extensión `.txt` mediante `FileNameExtensionFilter` y directorio inicial basado en `System.getProperty("user.dir")`.
-- Se introduce un diálogo personalizado `DialogoCoordenada` (basado en `JDialog`) para capturar coordenadas `x`/`y` como enteros, con validación y retorno de resultado como `Point`, y se integra a la aplicación vía menú `Graficar → Agregar Punto...`.
+- Se modifica el método de dibujo en `Dibujo` para recorrer la colección de puntos mediante un `for` de colección, ya que ahora cada punto se procesa de forma individual y no como pares consecutivos para trazar líneas.
+- Se reemplaza el trazado de líneas entre puntos por el dibujo de pequeños rectángulos con `Rectangle2D.Float`, usando una variable `lado` para controlar el tamaño visual de cada punto.
+- Se ajusta la coordenada vertical usando `-y` para compensar que, en la pantalla de una computadora, el eje Y crece hacia abajo, mientras que en el plano cartesiano tradicional crece hacia arriba.
 
 ## Mejoras logradas
-- **Mejor UX en operaciones de E/S**: el usuario selecciona archivos desde una interfaz guiada y recibe retroalimentación inmediata con mensajes modales en caso de error.
-- **Extensibilidad de captura de datos**: el diálogo `DialogoCoordenada` centraliza UI, validación y resultado, facilitando agregar nuevos campos y reglas sin reescribir la lógica de integración.
+- **Representación correcta del plano cartesiano**: los puntos respetan la orientación matemática esperada al invertir la coordenada vertical con `-y`.
+- **Código de dibujo más claro**: el recorrido con `for-each` elimina el manejo innecesario de índices cuando no se requiere conectar un punto con el siguiente.
