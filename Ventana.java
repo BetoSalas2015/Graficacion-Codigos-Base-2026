@@ -18,7 +18,7 @@ public class Ventana extends JFrame {
     private BufferedReader entrada;
     private JMenuBar menuBar;
     private JMenu mnuArchivo, mnuGraficar;
-    private JMenuItem itemCargar, itemSalir, itemAgregarPunto;
+    private JMenuItem itemCargar, itemSalir, itemAgregarPunto, itemLineaUno;
 
     public Ventana() {
         super("Gráficos en Java");
@@ -59,6 +59,7 @@ public class Ventana extends JFrame {
         itemCargar.addActionListener(new BotonCargar());
         itemSalir.addActionListener(new MenuSalir());
         itemAgregarPunto.addActionListener(new BotonAgregar());
+        itemLineaUno.addActionListener(new LineaUno());
 
         setSize(WIDTH, HEIGHT);
         setVisible(true);
@@ -137,6 +138,18 @@ public class Ventana extends JFrame {
         
     }
 
+    private class LineaUno implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DemoGraficos demo = new DemoGraficos();
+            demo.setIncremento(3);
+            vectorPuntos = demo.lineaDos(30, 150);
+            dibujo.asignaPuntos(vectorPuntos);
+            repaint();
+        }
+        
+    }
+
     // Métodos Generales
     private void crearMenu() {
         // Barra de Menus 
@@ -146,6 +159,7 @@ public class Ventana extends JFrame {
         itemCargar = new JMenuItem("Cargar Puntos...");
         itemSalir = new JMenuItem("Salir");
         itemAgregarPunto = new JMenuItem("Agregar Punto...");
+        itemLineaUno = new JMenuItem("Linea Uno");
 
         // Construir el menú "Archivo"
         mnuArchivo.add(itemCargar);
@@ -154,6 +168,7 @@ public class Ventana extends JFrame {
 
         // Construir el menu "Graficar"
         mnuGraficar.add(itemAgregarPunto);
+        mnuGraficar.add(itemLineaUno);
 
         // Agregar los JMenu a la barra de menús
         menuBar.add(mnuArchivo);
@@ -164,7 +179,6 @@ public class Ventana extends JFrame {
 
         setJMenuBar(menuBar);
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
